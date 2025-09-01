@@ -46,6 +46,9 @@ export default function Post() {
 
         </div>
 
+
+
+
       </div>
     </>
   );
@@ -81,7 +84,7 @@ export function PostHeader() {
             <span>a day ago</span>
           </div>
 
-          <span> uhejfiuewjfiuej </span>
+          <span> This is a comment, yay! </span>
         </div>
 
 

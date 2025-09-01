@@ -1,24 +1,25 @@
-import React from 'react'
-import PostInput from './PostInput'
-import Post from './Post'
+import React from "react";
+import PostInput from "./PostInput";
+import Post from "./Post";
 
 export default function PostFeed() {
   return (
     <>
-    <div className='flex-grow border border-black 
+      <div
+        className="flex-grow border border-black 
     max-w-2xl
-    '>
-        <div className='py-4 px-3 text-lg sm:text-xl sticky top-0
+    "
+      >
+        <div
+          className="py-4 px-3 text-lg sm:text-xl sticky top-0
         z-50 bg-white bg-opacity-80 backdrop-blur-sm font-bold 
-        '>
-            Home
+        "
+        >
+          Home
         </div>
-    <PostInput /> 
-    <Post />
-    </div>
+        <PostInput />
+        <Post />
+      </div>
     </>
-  )
+  );
 }
-
-
-  

@@ -1,7 +1,7 @@
 import PostFeed from "@/components/PostFeed";
 import Sidebar from "@/components/Sidebar";
+import SignUpPrompt from "@/components/SignUpPrompt";
 import Widgets from "@/components/Widgets";
-import Image from "next/image";
 
 export default function Home() {
   return (
@@ -14,8 +14,8 @@ export default function Home() {
         <Sidebar />
         <PostFeed />
         <Widgets />
-
       </div>
+      <SignUpPrompt />
     </>
   );
 }
