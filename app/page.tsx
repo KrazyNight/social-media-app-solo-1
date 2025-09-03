@@ -15,7 +15,7 @@ export default function Home() {
         <PostFeed />
         <Widgets />
       </div>
-      {/* <SignUpPrompt /> */}
+     <SignUpPrompt /> 
     </>
   );
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import SignUpModal from './modals/SignUpModal'
 
 export default function SignUpPrompt() {
   return (
@@ -16,7 +17,7 @@ export default function SignUpPrompt() {
         <div className="flex space-x-2 w-full md:w-fit p-3  ">
 
             <button>Log In</button>
-            <button>Sign In</button>
+            <SignUpModal />
 
         </div>
 
