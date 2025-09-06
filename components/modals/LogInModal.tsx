@@ -1,18 +1,19 @@
-"use client";
-import { closeSignUpModal, openSignUpModal } from "@/redux/slices/modalSlice";
-import { AppDispatch, RootState } from "@/redux/store";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { Modal } from "@mui/material";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+"use client"
 
-export default function SignUpModal() {
+import { closeLogInModal, openLogInModal } from '@/redux/slices/modalSlice';
+import { AppDispatch, RootState } from '@/redux/store';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { Modal } from '@mui/material';
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+
+export default function LogInModal() {
     
   const [showPassword, setShowPassord] = useState(false);
 
 
   const isOpen = useSelector(
-    (state: RootState) => state.modals.signUpModalOpen
+    (state: RootState) => state.modals.logInModalOpen
   );
   const dispatch: AppDispatch = useDispatch();
 
@@ -22,14 +23,14 @@ export default function SignUpModal() {
         className="w-full h-[48px] md:w-[88px] md:h-[40px] text-sm font-bold bg-white
             rounded-full
             "
-        onClick={() => dispatch(openSignUpModal())}
+        onClick={() => dispatch(openLogInModal())}
       >
-        Sign Up
+        Log In
       </button>
 
       <Modal
         open={isOpen}
-        onClose={() => dispatch(closeSignUpModal())}
+        onClose={() => dispatch(closeLogInModal())}
         className="flex justify-center items-center"
       >
         <div
@@ -40,14 +41,7 @@ export default function SignUpModal() {
           <form className="pt-10 pb-20 px-4 sm:px-20">
             <h1 className="text-3xl font-bold mb-10 ">Create Your account</h1>
             <div className=" w-full space-y-5 mb-10  ">
-              <input
-                type="text"
-                placeholder="Name"
-                className="w-full h-[54px] border border-gray-300 
-                    outline-none pl-3 rounded-[4px] focus:border-[#f4af01]
-                    transition 
-                    "
-              />
+              
               <input
                 type="email"
                 placeholder="Email"
@@ -83,7 +77,7 @@ export default function SignUpModal() {
                 rounded-full
                 "
               >
-                <span className="text-white ">Sign Up</span>
+                <span className="text-white ">Log In</span>
               </button>
               <span className="mb-5 text-sm text-center block "> Or </span>
               <button
