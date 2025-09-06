@@ -2,7 +2,7 @@
 
 import { closeLogInModal, openLogInModal } from '@/redux/slices/modalSlice';
 import { AppDispatch, RootState } from '@/redux/store';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { EyeIcon, EyeSlashIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Modal } from '@mui/material';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -38,7 +38,12 @@ export default function LogInModal() {
         sm:rounded-xl
         "
         >
-          <form className="pt-10 pb-20 px-4 sm:px-20">
+          <XMarkIcon
+            className="w-7 mt-5 ml-5 cursor-pointer"
+            onClick={() => dispatch(closeLogInModal())}
+          />
+
+          <div className="pt-10 pb-20 px-4 sm:px-20">
             <h1 className="text-3xl font-bold mb-10 ">Create Your account</h1>
             <div className=" w-full space-y-5 mb-10  ">
               
@@ -89,7 +94,7 @@ export default function LogInModal() {
               </button>
           
 
-          </form>
+          </div>
         </div>
       </Modal>
     </>

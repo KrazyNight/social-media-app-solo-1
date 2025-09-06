@@ -1,20 +1,48 @@
 "use client";
+
 import { closeSignUpModal, openSignUpModal } from "@/redux/slices/modalSlice";
 import { AppDispatch, RootState } from "@/redux/store";
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Modal } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/firebase";
+import { sign } from "crypto";
 
 export default function SignUpModal() {
-    
   const [showPassword, setShowPassord] = useState(false);
-
-
-  const isOpen = useSelector(
-    (state: RootState) => state.modals.signUpModalOpen
-  );
+  const isOpen = useSelector((state: RootState) => state.modals.signUpModalOpen);
   const dispatch: AppDispatch = useDispatch();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+
+  async function handleSignUp() {
+    const userCredentails = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    )
+  }
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) return
+
+      //redux
+      
+
+    }
+    )
+
+  }, [])
+
+
+
+
 
   return (
     <>
@@ -37,7 +65,11 @@ export default function SignUpModal() {
         sm:rounded-xl
         "
         >
-          <form className="pt-10 pb-20 px-4 sm:px-20">
+          <XMarkIcon
+            className="w-7 mt-5 ml-5 cursor-pointer"
+            onClick={() => dispatch(closeSignUpModal())}
+          />
+          <div className="pt-10 pb-20 px-4 sm:px-20">
             <h1 className="text-3xl font-bold mb-10 ">Create Your account</h1>
             <div className=" w-full space-y-5 mb-10  ">
               <input
@@ -47,6 +79,7 @@ export default function SignUpModal() {
                     outline-none pl-3 rounded-[4px] focus:border-[#f4af01]
                     transition 
                     "
+
               />
               <input
                 type="email"
@@ -55,6 +88,8 @@ export default function SignUpModal() {
                     outline-none pl-3 rounded-[4px] focus:border-[#f4af01]
                     transition 
                     "
+                onChange={(event) => setEmail(event.target.value)}
+                value={email}
               />
 
               <div
@@ -66,6 +101,9 @@ export default function SignUpModal() {
                 <input type={showPassword ? "text" : "password"} 
                 placeholder="Password"
                 className="w-full h-full pl-3 outline-none "
+                onChange={(event) => setPassword(event.target.value)}
+                value={password}
+
                 />
                 <div className="w-7 h-7 text-gray-400 cursor-pointer"
                 onClick={() => setShowPassord(!showPassword)}
@@ -95,7 +133,7 @@ export default function SignUpModal() {
               </button>
           
 
-          </form>
+          </div>
         </div>
       </Modal>
     </>
