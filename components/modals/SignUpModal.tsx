@@ -27,18 +27,19 @@ export default function SignUpModal() {
       password,
     )
   }
+  // "RUN" function handleSignUp(), will link to firebase auth
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (currentUser) => {
-      if (!currentUser) return
+  // useEffect(() => {
+  //   onAuthStateChanged(auth, (currentUser) => {
+  //     if (!currentUser) return
 
-      //redux
+  //     //redux
       
 
-    }
-    )
+  //   }
+  //   )
 
-  }, [])
+  // }, [])
 
 
 
@@ -101,6 +102,7 @@ export default function SignUpModal() {
                 <input type={showPassword ? "text" : "password"} 
                 placeholder="Password"
                 className="w-full h-full pl-3 outline-none "
+
                 onChange={(event) => setPassword(event.target.value)}
                 value={password}
 
@@ -120,6 +122,9 @@ export default function SignUpModal() {
                 className="w-full h-[48px] text-sm font-bold mb-5 bg-[#f4af01]
                 rounded-full
                 "
+                onClick={() => handleSignUp()}
+
+                //"RUN" the handleSignUp(), will link to firebase auth
               >
                 <span className="text-white ">Sign Up</span>
               </button>
