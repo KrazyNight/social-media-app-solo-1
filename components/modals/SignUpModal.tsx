@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/firebase";
 import { sign } from "crypto";
+import { signInUser } from "@/redux/slices/userSlice";
 
 export default function SignUpModal() {
   const [showPassword, setShowPassord] = useState(false);
@@ -40,6 +41,23 @@ export default function SignUpModal() {
   //   )
 
   // }, [])
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (!currentUser) return
+
+      //redux
+      dispatch(signInUser({
+        name: "",
+        username: "",
+        email: "",
+        uid: "",
+      }))
+
+    })
+    return unsubscribe
+  }, [])
+
 
 
 
