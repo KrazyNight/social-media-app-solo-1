@@ -1,3 +1,4 @@
+"use client"
 // import { auth } from '@/firebase'
 // import { closeLogInModal, closeSignInModal } from '@/redux/slices/modalSlice'
 // import { signOutUser } from '@/redux/slices/userSlice'

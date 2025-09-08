@@ -5,7 +5,7 @@ import React from "react";
 export default function Post() {
   return (
     <>
-      <div>
+      <div className="border-b border-gray-400">
         <PostHeader />
         <div className="ml-16 p-3 flex space-x-14 " >
             <div className="relative" >

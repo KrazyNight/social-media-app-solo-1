@@ -12,7 +12,9 @@ export default function PostFeed() {
       >
         <div
           className="py-4 px-3 text-lg sm:text-xl sticky top-0
-        z-50 bg-white bg-opacity-80 backdrop-blur-sm font-bold 
+        z-50 bg-white bg-opacity-80 backdrop-blur-sm font-bold
+        
+        border-b border-gray-400
         "
         >
           Home
