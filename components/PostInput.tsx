@@ -1,8 +1,34 @@
+"use client"
+
+import { db } from '@/firebase';
+import { RootState } from '@/redux/store';
 import { CalendarIcon, ChartBarIcon, FaceSmileIcon, MapPinIcon, PhotoIcon } from '@heroicons/react/24/outline'
+import { addDoc, collection, getDoc, serverTimestamp } from 'firebase/firestore';
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 
 export default function PostInput() {
+
+  // const [text, setText] = useState("");
+
+  // const user = useSelector((state: RootState) => state.user)
+
+  // async function sendPost() {
+  //   await addDoc(collection(db, "posts"), {
+  //     text: text,
+  //     name: user.name,
+  //     username: user.username,
+  //     timestamp: serverTimestamp(),
+  //     comments: [],
+  //     likes: [],
+  //   });
+
+  //   setText(" ")
+  // }
+  
+
+
   return (
     <>
     <div className='flex space-x-5 p-3
@@ -11,7 +37,7 @@ export default function PostInput() {
         <Image 
         src="/assets/busybee-logo2.png"
         width={44}
-        height={44 }
+        height={44}
         alt="Logo"
         className='w-11 h-11'
         />
@@ -21,6 +47,10 @@ export default function PostInput() {
             border-b border-gray-400 outline-none
             '
             placeholder="What's happening!?"
+
+
+            onChange={(event) => setText(event.target.value)}
+            value={text}
             />
 
 
@@ -36,6 +66,7 @@ export default function PostInput() {
                 className='bg-[#F4AF01] text-white w-[80px] h-[36px] rounded-full
                 text-sm cursor-pointer
                 '
+                onClick={() => sendPost()}
                 >Bumble
                 </button>
             </div>

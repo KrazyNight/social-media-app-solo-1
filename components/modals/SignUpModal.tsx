@@ -79,7 +79,6 @@ export default function SignUpModal() {
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) return
-      console.log(currentUser)
 
       //redux
       dispatch(signInUser({

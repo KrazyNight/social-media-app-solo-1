@@ -1,8 +1,12 @@
 import { ArrowUpTrayIcon, ChartBarIcon, ChatBubbleOvalLeftEllipsisIcon, HeartIcon } from "@heroicons/react/24/outline";
+import { DocumentData } from "firebase/firestore";
 import Image from "next/image";
 import React from "react";
 
-export default function Post() {
+interface PostProps {
+  data: DocumentData
+}
+export default function Post({ data }: PostProps) {
   return (
     <>
       <div className="border-b border-gray-400">
