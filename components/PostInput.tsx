@@ -26,6 +26,9 @@ export default function PostInput() {
 
   //   setText(" ")
   // }
+
+
+  
   const [text, setText] = useState("");
   const user = useSelector((state: RootState) => state.user)
 
@@ -41,7 +44,7 @@ export default function PostInput() {
     })
 
     setText("")
-    
+
   }
 
   

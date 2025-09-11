@@ -3,6 +3,9 @@ import { DocumentData, Timestamp } from "firebase/firestore";
 import Image from "next/image";
 import React from "react";
 import Moment from "react-moment"
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { openCommentModal } from "@/redux/slices/modalSlice";
 
 interface PostProps {
   data: DocumentData,
@@ -10,6 +13,7 @@ interface PostProps {
 
 
 export default function Post({ data }: PostProps) {
+  const dispatch: AppDispatch = useDispatch();
   return (
     <>
       <div className="border-b border-gray-400">
@@ -24,6 +28,8 @@ export default function Post({ data }: PostProps) {
                 <ChatBubbleOvalLeftEllipsisIcon 
                 className="w-[22px] h-[22px] cursor-pointer
                 hover:text-[#F4AF01] transition "
+                
+                onClick={() => dispatch(openCommentModal())}
                 />
                 <span className="absolute text-xs top-1 -right-3 " >
                     2
