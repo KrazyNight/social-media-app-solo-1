@@ -26,6 +26,24 @@ export default function PostInput() {
 
   //   setText(" ")
   // }
+  const [text, setText] = useState("");
+  const user = useSelector((state: RootState) => state.user)
+
+  async function sendPost() {
+    await addDoc(collection(db, "posts"), {
+      text: text,
+      name: user.name,
+      username: user.username,
+      timestamp: serverTimestamp(),
+      likes: [],
+      comments: [],
+
+    })
+
+    setText("")
+    
+  }
+
   
 
 
