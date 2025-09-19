@@ -1,14 +1,20 @@
 "use client"
 
 import { db } from '@/firebase';
-import { RootState } from '@/redux/store';
+import { closeCommentModal } from '@/redux/slices/modalSlice';
+import { AppDispatch, RootState } from '@/redux/store';
 import { CalendarIcon, ChartBarIcon, FaceSmileIcon, MapPinIcon, PhotoIcon } from '@heroicons/react/24/outline'
-import { addDoc, collection, getDoc, serverTimestamp } from 'firebase/firestore';
+import { addDoc, arrayUnion, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function PostInput() {
+
+interface PostInputProps {
+  insideModal?: boolean
+}
+
+export default function PostInput({ insideModal }: PostInputProps) {
 
   // const [text, setText] = useState("");
 
@@ -28,9 +34,11 @@ export default function PostInput() {
   // }
 
 
-  
   const [text, setText] = useState("");
   const user = useSelector((state: RootState) => state.user)
+  const commentDetails = useSelector((state: RootState) => state.modals.commentPostDetails)
+  const dispatch: AppDispatch = useDispatch()
+
 
   async function sendPost() {
     await addDoc(collection(db, "posts"), {
@@ -47,7 +55,39 @@ export default function PostInput() {
 
   }
 
+
+  //   async function sendComment() {
+  //   const postRef = doc(db, 'posts', commentDetails.id)
+    
+  //   await updateDoc(postRef, {
+  //     comments: arrayUnion({
+  //       name: user.name,
+  //       username: user.username,
+  //       text: text,
+  //     })
+  //   }) 
+
+  //   setText("")
+  //   dispatch(closeCommentModal());
+  // }
+
+  async function sendComment() {
+    const postRef = doc(db, "posts", commentDetails.id)
+    
+    await updateDoc(postRef, {
+      comments: arrayUnion({
+        name: user.name,
+        username: user.username,
+        text: text,
+      })
+    })
+    setText("")
+    dispatch(closeCommentModal());
+
+    
+  }
   
+
 
 
   return (
@@ -56,10 +96,10 @@ export default function PostInput() {
     border-b border-gray-400
     ' >
         <Image 
-        src="/assets/busybee-logo2.png"
+        src={insideModal ? "/assets/profile-pic.png" : "/assets/busybee-logo2.png"}
         width={44}
         height={44}
-        alt="Logo"
+        alt={insideModal ? "ProFile Picture" : "Logo"}
         className='w-11 h-11'
         />
         <div className='w-full '>
@@ -67,7 +107,7 @@ export default function PostInput() {
             min-h-[50px] text-lg
             border-b border-gray-400 outline-none
             '
-            placeholder="What's happening!?"
+            placeholder={insideModal ? "Send your reply": "What's happening!?"}
 
 
             onChange={(event) => setText(event.target.value)}
@@ -87,7 +127,7 @@ export default function PostInput() {
                 className='bg-[#F4AF01] text-white w-[80px] h-[36px] rounded-full
                 text-sm cursor-pointer
                 '
-                onClick={() => sendPost()}
+                onClick={() => insideModal ? sendComment() : sendPost()}
                 >Bumble
                 </button>
             </div>

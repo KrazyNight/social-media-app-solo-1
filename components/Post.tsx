@@ -6,25 +6,31 @@ import Moment from "react-moment"
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { openCommentModal } from "@/redux/slices/modalSlice";
+import Link from "next/link";
 
 interface PostProps {
   data: DocumentData,
+  id: string
 }
 
 
-export default function Post({ data }: PostProps) {
+export default function Post({ data, id }: PostProps) {
   const dispatch: AppDispatch = useDispatch();
   return (
     <>
       <div className="border-b border-gray-400">
+
+        <Link href={'/' + id} >
+        
         <PostHeader
         name={data.name}
         username={data.username}
         timestamp= {data.timestamp}
-        text={data.text}
-
-
+        text={data.text}  
         />
+
+        </Link>
+
         <div className="ml-16 p-3 flex space-x-14 " >
             <div className="relative" >
                 <ChatBubbleOvalLeftEllipsisIcon 
@@ -81,12 +87,13 @@ export default function Post({ data }: PostProps) {
 interface PostHeaderProps {
   name: string,
   username: string,
-  timestamp: Timestamp,
-  text: string
+  timestamp?: Timestamp,
+  text: string,
+  ReplyTo?: string,
 }
 
 
-export function PostHeader({ name, username, timestamp, text}: PostHeaderProps) {
+export function PostHeader({ name, username, timestamp, text, ReplyTo}: PostHeaderProps) {
   return (
     <>
       <div className="flex p-3 space-x-5 ">
@@ -138,6 +145,12 @@ export function PostHeader({ name, username, timestamp, text}: PostHeaderProps) 
           </div>
 
           <span>{text}</span>
+          {
+            ReplyTo &&
+            <span className="text-[#707E89]">Replying to <span className=" text-[#F4AF01] ">@{ReplyTo}</span></span>
+
+          }
+
         </div>
 
 

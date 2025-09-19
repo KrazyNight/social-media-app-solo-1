@@ -17,6 +17,7 @@ export default function Home() {
         <Widgets />
       </div>
      <SignUpPrompt /> 
+     <CommentModal />
 
 
 
