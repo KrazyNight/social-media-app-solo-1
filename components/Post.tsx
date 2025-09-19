@@ -20,8 +20,10 @@ export default function Post({ data }: PostProps) {
         <PostHeader
         name={data.name}
         username={data.username}
-        timestamp={data.timestamp}
+        timestamp= {data.timestamp}
         text={data.text}
+
+
         />
         <div className="ml-16 p-3 flex space-x-14 " >
             <div className="relative" >
@@ -82,7 +84,9 @@ interface PostHeaderProps {
   timestamp: Timestamp,
   text: string
 }
-export function PostHeader({ name, username, timestamp, text }: PostHeaderProps) {
+
+
+export function PostHeader({ name, username, timestamp, text}: PostHeaderProps) {
   return (
     <>
       <div className="flex p-3 space-x-5 ">
@@ -109,8 +113,18 @@ export function PostHeader({ name, username, timestamp, text }: PostHeaderProps)
             "
             >@{username}</span>
             <span> · </span>
+            
+            {
+              timestamp &&
+
+            <Moment fromNow>
+              {timestamp.toDate()}
+            </Moment>
+            }
 
 
+
+{/* 
             {
               timestamp &&
               
@@ -118,7 +132,7 @@ export function PostHeader({ name, username, timestamp, text }: PostHeaderProps)
             {timestamp.toDate()}
             </Moment>
 
-            }
+            } */}
 
 
           </div>

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "@/firebase";
 import { signInUser } from "@/redux/slices/userSlice";
+import { create } from "domain";
 
 export default function SignUpModal() {
   const [showPassword, setShowPassord] = useState(false);
@@ -44,58 +45,111 @@ export default function SignUpModal() {
   //   return unsubscribe
   // }, [])
 
-  async function handleLogInGuest() {
-      const unsubscribed = await signInWithEmailAndPassword(
-        auth,
-        "guest123456789@gmail.com",
-        "123456789"
-      )
-    }
 
+
+//Original 
+
+  // async function handleSignUp() {
+  //   const userCredentials = await createUserWithEmailAndPassword(
+  //     auth, 
+  //     email, 
+  //     password
+  //   );
+
+  //   await updateProfile(userCredentials.user, {
+  //     displayName: name,
+  //   });
+
+
+  //   dispatch(signInUser({
+  //     name: userCredentials.user.displayName ,// inside currentUser, "displayName: null "
+
+  //     username: userCredentials.user.email!.split("@")[0],
+  //     uid: userCredentials.user.uid,
+  //     email: userCredentials.user.email,
+  //   }))
+
+  // }
+
+
+
+  //   async function handleLogInGuest() {
+  //     const unsubscribed = await signInWithEmailAndPassword(
+  //       auth,
+  //       "guest123456789@gmail.com",
+  //       "123456789"
+  //     )
+  //   }
+
+
+  // useEffect(() => {
+  //   const unsubscribed = onAuthStateChanged(auth, (currentUser) => {
+  //     if (!currentUser) return
+
+  //     //redux
+  //     dispatch(signInUser({
+
+  //       name: currentUser.displayName ,// inside currentUser, "displayName: null "
+
+  //       username: currentUser.email!.split("@")[0],
+  //       uid: currentUser.uid,
+  //       email: currentUser.email,
+  //     }
+  //     ))
+  //   } 
+  //   )
+  //   return unsubscribed
+
+  // }, [])
 
 
   async function handleSignUp() {
-    const userCredentials = await createUserWithEmailAndPassword(
-      auth, 
-      email, 
-      password
-    );
+    const userCredentails = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password,
+    )
 
-    await updateProfile(userCredentials.user, {
+    await updateProfile(userCredentails.user, {
       displayName: name,
-    });
+    })
 
 
+    //sign in in redux
     dispatch(signInUser({
-      name: userCredentials.user.displayName ,// inside currentUser, "displayName: null "
-
-      username: userCredentials.user.email!.split("@")[0],
-      uid: userCredentials.user.uid,
-      email: userCredentials.user.email,
+      name: userCredentails.user.displayName,
+      username: userCredentails.user.email!.split('@')[0], 
+      uid: userCredentails.user.uid, 
+      email: userCredentails.user.email, 
     }))
-
   }
 
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, (currentUser) => {
       if (!currentUser) return
 
-      //redux
+      //dispatch redux
       dispatch(signInUser({
-
-        name: currentUser.displayName ,// inside currentUser, "displayName: null "
-
+        name: currentUser.displayName,
         username: currentUser.email!.split("@")[0],
         uid: currentUser.uid,
         email: currentUser.email,
-      }
-      ))
-    } 
+
+      }))
+      
+    }
     )
     return unsubscribed
-
   }, [])
 
+
+     async function handleLogInGuest() {
+      const unsubscribed = await signInWithEmailAndPassword(
+        auth,
+        "guest123456789@gmail.com",
+        "123456789"
+      )
+    }
 
 
 
