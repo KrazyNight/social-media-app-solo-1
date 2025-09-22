@@ -5,7 +5,7 @@ import React from "react";
 import Moment from "react-moment"
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
-import { openCommentModal } from "@/redux/slices/modalSlice";
+import { openCommentModal, setCommentDetails } from "@/redux/slices/modalSlice";
 import Link from "next/link";
 
 interface PostProps {
@@ -20,16 +20,16 @@ export default function Post({ data, id }: PostProps) {
     <>
       <div className="border-b border-gray-400">
 
-        <Link href={'/' + id} >
-        
-        <PostHeader
-        name={data.name}
-        username={data.username}
-        timestamp= {data.timestamp}
-        text={data.text}  
-        />
+        <Link href="/ + id" >
 
+          <PostHeader
+          name={data.name}
+          username={data.username}
+          timestamp= {data.timestamp}
+          text={data.text}  
+          />
         </Link>
+
 
         <div className="ml-16 p-3 flex space-x-14 " >
             <div className="relative" >
@@ -37,7 +37,14 @@ export default function Post({ data, id }: PostProps) {
                 className="w-[22px] h-[22px] cursor-pointer
                 hover:text-[#F4AF01] transition "
                 
-                onClick={() => dispatch(openCommentModal())}
+                onClick={() => {
+                  dispatch(setCommentDetails({
+                    name: data.name,
+                    username: data.username,
+                    id: id,
+                    text: data.text,
+                  }))
+                  dispatch(openCommentModal())}}
                 />
                 <span className="absolute text-xs top-1 -right-3 " >
                     2
