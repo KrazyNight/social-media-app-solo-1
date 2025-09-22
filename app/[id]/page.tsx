@@ -5,8 +5,12 @@ import SignUpPrompt from "@/components/SignUpPrompt";
 import Widgets from "@/components/Widgets";
 import {
   ArrowLeftIcon,
+  ArrowUpTrayIcon,
+  ChartBarIcon,
+  ChatBubbleOvalLeftEllipsisIcon,
   EllipsisHorizontalCircleIcon,
   EllipsisHorizontalIcon,
+  HeartIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import Link from "next/link";
@@ -87,6 +91,45 @@ export default function page() {
             <span className="text-[15px] ">TEXT</span>
           </div>
 
+
+          <div className="border-b border-gray-100 p-3 text-[15px] ">
+            <span className="font-bold ">0</span> Likes
+          </div>
+
+
+
+          <div
+            className="border-b border-gray-300 p-3 text-[15px]
+            flex justify-evenly
+            "
+            >
+            <ChatBubbleOvalLeftEllipsisIcon
+              className="w-[22px] h-[22px]
+            text-[#707E89] cursor-not-allowed 
+              "
+            />
+            <HeartIcon
+              className="w-[22px] h-[22px]
+            text-[#707E89] cursor-not-allowed 
+              "
+            />
+            <ChartBarIcon
+              className="w-[22px] h-[22px]
+            text-[#707E89] cursor-not-allowed 
+              "
+            />
+            <ArrowUpTrayIcon
+              className="w-[22px] h-[22px]
+            text-[#707E89] cursor-not-allowed 
+              "
+            />
+
+          </div>
+
+
+
+
+          
 
 
 
