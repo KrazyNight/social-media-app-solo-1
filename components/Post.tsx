@@ -1,8 +1,9 @@
+"use client"
 import { ArrowUpTrayIcon, ChartBarIcon, ChatBubbleOvalLeftEllipsisIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { DocumentData, Timestamp } from "firebase/firestore";
 import Image from "next/image";
 import React from "react";
-import Moment from "react-moment"
+import Moment from "react-moment";
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { openCommentModal, setCommentDetails } from "@/redux/slices/modalSlice";
@@ -20,7 +21,8 @@ export default function Post({ data, id }: PostProps) {
     <>
       <div className="border-b border-gray-400">
 
-        <Link href="/ + id" >
+        <Link href={'/' + id }>
+        
 
           <PostHeader
           name={data.name}
@@ -126,14 +128,19 @@ export function PostHeader({ name, username, timestamp, text, ReplyTo}: PostHead
             sm:max-w-[160p]
             "
             >@{username}</span>
-            <span> · </span>
             
             {
-              timestamp &&
-
+              timestamp && (
+                <>
+                <span> · </span>
             <Moment fromNow>
               {timestamp.toDate()}
             </Moment>
+                
+                </>
+
+              )
+
             }
 
 

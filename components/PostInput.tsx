@@ -4,7 +4,7 @@ import { db } from '@/firebase';
 import { closeCommentModal } from '@/redux/slices/modalSlice';
 import { AppDispatch, RootState } from '@/redux/store';
 import { CalendarIcon, ChartBarIcon, FaceSmileIcon, MapPinIcon, PhotoIcon } from '@heroicons/react/24/outline'
-import { addDoc, arrayUnion, collection, doc, getDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { addDoc, arrayUnion, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';

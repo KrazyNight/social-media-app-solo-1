@@ -86,7 +86,7 @@ export default function PostFeed() {
         </div>
         <PostInput />
         {
-          posts.map((post) => <Post
+          posts.map(post => <Post
           key={post.id}
           data={post.data()}
           id={post.id}

@@ -1,22 +1,64 @@
-import CommentModal from "@/components/modals/CommentModal";
-import PostFeed from "@/components/PostFeed";
+import { PostHeader } from "@/components/Post";
 import Sidebar from "@/components/Sidebar";
 import SignUpPrompt from "@/components/SignUpPrompt";
 import Widgets from "@/components/Widgets";
+import { db } from "@/firebase";
 import {
   ArrowLeftIcon,
   ArrowUpTrayIcon,
   ChartBarIcon,
   ChatBubbleOvalLeftEllipsisIcon,
-  EllipsisHorizontalCircleIcon,
   EllipsisHorizontalIcon,
   HeartIcon,
 } from "@heroicons/react/24/outline";
+import { doc, getDoc } from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-export default function page() {
+//
+// const fetchPost = async (id: string) => {
+//   const postRef = doc(db, "posts", id)
+//   const postSnap = await getDoc(postRef )
+//   return postSnap.data()
+// }
+
+// interface PageProps {
+//   params: {
+//     id: string
+//   }
+// }
+//
+
+const fetchPost = async (id: string) => {
+  const postRef = doc(db, "posts", id)
+  const postSnap = await getDoc(postRef)
+  return postSnap.data()
+};
+
+interface PageProps {
+  params: {
+    id: string
+  }
+}
+
+interface Comment {
+  name: string;
+  username: string;
+  text: string;
+}
+
+export default async function page({ params }: PageProps) {
+  const { id } = params;
+  const post = await fetchPost(id);
+  console.log(post)
+  
+  
+  //
+  // const { id } = params
+  // const post = await fetchPost(id)
+  //
+
   return (
     <>
       <div
@@ -47,13 +89,8 @@ export default function page() {
             Bumble
           </div>
 
-
-
-
-
           <div className="flex flex-col p-3 space-y-5 border-b border-gray-300 ">
             <div className="flex justify-between items-center mb-1.5  ">
-
               <div className="flex space-x-3   ">
                 <Image
                   src={"/assets/profile-pic.png"}
@@ -71,7 +108,7 @@ export default function page() {
                         sm:max-w-[160p]
                         "
                   >
-                    Name
+                    name
                   </span>
                   <span
                     className="text-[#707E89] 
@@ -80,29 +117,25 @@ export default function page() {
                         sm:max-w-[160p]
                         "
                   >
-                    @Username
+                    username
                   </span>
                 </div>
-
               </div>
 
               <EllipsisHorizontalIcon className="w-5 h-5" />
             </div>
-            <span className="text-[15px] ">TEXT</span>
+            <span className="text-[15px] "> text </span>
           </div>
-
 
           <div className="border-b border-gray-100 p-3 text-[15px] ">
-            <span className="font-bold ">0</span> Likes
+            <span className="font-bold "> 0 </span> Likes
           </div>
-
-
 
           <div
             className="border-b border-gray-300 p-3 text-[15px]
             flex justify-evenly
             "
-            >
+          >
             <ChatBubbleOvalLeftEllipsisIcon
               className="w-[22px] h-[22px]
             text-[#707E89] cursor-not-allowed 
@@ -126,32 +159,73 @@ export default function page() {
 
           </div>
 
+          {/* 
 
+          {
+            post?.comments.map((comment: Comment) => (
+                <Comment
+                name={comment.name}
+                username={comment.username}
+                text={comment.text}
+                />
 
+            ))}
+ */}
 
-          
+          {/* {post?.comments.map((comment: Comment) => (
+            <Comment
+              name={comment.name}
+              username={comment.username}
+              text={comment.text}
+            />
+          ))} */}
+          <Comment
+              name="name"
+              username="username"
+              text="text"
+          />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+          {/* <Comment /> */}
         </div>
-
         <Widgets />
       </div>
       <SignUpPrompt />
     </>
+  );
+}
+
+interface CommentProps {
+  name: string;
+  username: string;
+  text: string;
+}
+function Comment({ name, username, text }: CommentProps) {
+  return (
+    <div className="border-b border-gray-300  ">
+      <PostHeader name="erik" username="erik101" text="text stuff" />
+
+      <div className="flex space-x-14 p-3 ms-16  ">
+        <ChatBubbleOvalLeftEllipsisIcon
+          className="w-[22px] h-[22px]
+             cursor-not-allowed 
+              "
+        />
+        <HeartIcon
+          className="w-[22px] h-[22px]
+             cursor-not-allowed 
+              "
+        />
+        <ChartBarIcon
+          className="w-[22px] h-[22px]
+             cursor-not-allowed 
+              "
+        />
+        <ArrowUpTrayIcon
+          className="w-[22px] h-[22px]
+             cursor-not-allowed 
+              "
+        />
+      </div>
+    </div>
   );
 }
