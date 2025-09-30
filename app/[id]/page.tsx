@@ -108,7 +108,7 @@ export default async function page({ params }: PageProps) {
                         sm:max-w-[160p]
                         "
                   >
-                    name
+                    {post?.name}
                   </span>
                   <span
                     className="text-[#707E89] 
@@ -117,18 +117,18 @@ export default async function page({ params }: PageProps) {
                         sm:max-w-[160p]
                         "
                   >
-                    username
+                    {post?.username}
                   </span>
                 </div>
               </div>
 
               <EllipsisHorizontalIcon className="w-5 h-5" />
             </div>
-            <span className="text-[15px] "> text </span>
+            <span className="text-[15px] "> {post?.text} </span>
           </div>
 
           <div className="border-b border-gray-100 p-3 text-[15px] ">
-            <span className="font-bold "> 0 </span> Likes
+            <span className="font-bold "> {post?.likes.length} </span> Likes
           </div>
 
           <div
@@ -158,9 +158,18 @@ export default async function page({ params }: PageProps) {
             />
 
           </div>
+          {
+            post?.comments.map((comment: Comment) => (
+              <Comment
+              name={comment.name}
+              username={comment.username}
+              text={comment.text}
+              />
+            ))
+          }
 
-          {/* 
-
+          
+{/* 
           {
             post?.comments.map((comment: Comment) => (
                 <Comment
@@ -169,8 +178,8 @@ export default async function page({ params }: PageProps) {
                 text={comment.text}
                 />
 
-            ))}
- */}
+            ))} */}
+
 
           {/* {post?.comments.map((comment: Comment) => (
             <Comment
@@ -179,11 +188,14 @@ export default async function page({ params }: PageProps) {
               text={comment.text}
             />
           ))} */}
+
+          
+{/*           
           <Comment
               name="name"
               username="username"
               text="text"
-          />
+          /> */}
 
           {/* <Comment /> */}
         </div>
@@ -202,7 +214,7 @@ interface CommentProps {
 function Comment({ name, username, text }: CommentProps) {
   return (
     <div className="border-b border-gray-300  ">
-      <PostHeader name="erik" username="erik101" text="text stuff" />
+      <PostHeader name={name} username={username} text={text} />
 
       <div className="flex space-x-14 p-3 ms-16  ">
         <ChatBubbleOvalLeftEllipsisIcon

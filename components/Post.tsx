@@ -1,13 +1,15 @@
 "use client"
 import { ArrowUpTrayIcon, ChartBarIcon, ChatBubbleOvalLeftEllipsisIcon, HeartIcon } from "@heroicons/react/24/outline";
-import { DocumentData, Timestamp } from "firebase/firestore";
+import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
+import { arrayRemove, arrayUnion, doc, DocumentData, Timestamp, updateDoc } from "firebase/firestore";
 import Image from "next/image";
 import React from "react";
 import Moment from "react-moment";
-import { AppDispatch } from "@/redux/store";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import { openCommentModal, setCommentDetails } from "@/redux/slices/modalSlice";
 import Link from "next/link";
+import { db } from "@/firebase";
 
 interface PostProps {
   data: DocumentData,
@@ -17,12 +19,54 @@ interface PostProps {
 
 export default function Post({ data, id }: PostProps) {
   const dispatch: AppDispatch = useDispatch();
+  const user = useSelector((state: RootState) => state.user)
+
+  //  async function likePost() {
+
+  //   if (!user.username) {
+  //     dispatch(openLogInModal())
+  //     return;
+  //   }
+  //   const postRef = doc(db, 'posts', id);
+
+  //   if (data.likes.includes(user.uid)){
+  //     await updateDoc(postRef, {
+  //       likes: arrayRemove(user.uid),
+  //     });
+  //   } else {
+  //     await updateDoc(postRef, {
+  //       likes: arrayUnion(user.uid)
+  //     });
+  //   }
+  // }
+
+  async function likePost() {
+    const postRef = doc(db, 'posts', id)
+
+
+
+    if (data.likes.includes(user.uid)) {
+      await updateDoc(postRef, {
+        likes: arrayRemove(user.uid)
+      })
+    } else {
+      await updateDoc(postRef, {
+        likes: arrayUnion(user.uid)
+      })
+
+    }
+
+
+  }
+
+
+
   return (
     <>
       <div className="border-b border-gray-400">
 
         <Link href={'/' + id }>
-        
+
 
           <PostHeader
           name={data.name}
@@ -48,19 +92,60 @@ export default function Post({ data, id }: PostProps) {
                   }))
                   dispatch(openCommentModal())}}
                 />
-                <span className="absolute text-xs top-1 -right-3 " >
-                    2
-                </span>
+
+                {
+                  data.comments.length > 0 && (
+                    <span className="absolute text-xs top-1 -right-3 " >
+                      {data.comments.length}
+                    </span>
+
+                  )
+                }
+                  
             </div>
 
             <div className="relative" >
+              {
+
+                data.likes.includes(user.uid)
+
+                  ?
+
+                  <HeartSolidIcon
+                  className="w-[22px] h-[22px] cursor-pointer
+                text-pink-500 transition "
+
+
+                onClick={() => likePost() }
+                  />
+
+                  :
+
+          
                 <HeartIcon 
                 className="w-[22px] h-[22px] cursor-pointer
-                hover:text-[#F4AF01] transition "
+                hover:text-pink-500 transition "
+
+
+                onClick={() => likePost() }
+
+
                 />
-                <span className="absolute text-xs top-1 -right-3 " >
-                    2
-                </span>
+              }
+
+
+
+
+                {
+                  data.likes.length > 0 && (
+                    <span className="absolute text-xs top-1 -right-3 " >
+                      {data.likes.length}
+                    </span>
+
+                  )
+                }
+
+
             </div>
 
             <div className="relative" >
