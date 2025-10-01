@@ -16,28 +16,35 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const fetchPost = async (id: string) => {
-  const postRef = doc(db, "posts", id);
-  const postSnap = await getDoc(postRef);
-  return postSnap.data();
-};
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
+//#4 fetchPost from firestore
+// const fetchPost = async (id: string) => {
+//   const postRef = doc(db, "posts", id);
+//   const postSnap = await getDoc(postRef);
+//   return postSnap.data();
+// };
 
-interface Comment {
-  name: string;
-  username: string;
-  text: string;
-}
+// interface PageProps {
+//   params: {
+//     id: string;
+//   };
+// }
 
-export default async function page({ params }: PageProps) {
-  const { id } = params;
-  const post = await fetchPost(id);
-  console.log(post);
+// interface Comment {
+//   name: string;
+//   username: string;
+//   text: string;
+// }
+
+
+
+// //example 
+// export default async function page({ params }: PageProps) {
+//   const { id } = params;
+//   const post = await fetchPost(id);
+//   console.log(post);
+
+export default function page() {
 
   return (
     <>
@@ -137,15 +144,19 @@ export default async function page({ params }: PageProps) {
               "
             />
           </div>
+
+{/* #5 post?.comments.map()
+
           {post?.comments.map((comment: Comment) => (
             <Comment
               name={comment.name}
               username={comment.username}
               text={comment.text}
             />
-          ))}
+          ))} 
+*/}
 
-          {/* <Comment /> */}
+          <Comment />
         </div>
         <Widgets />
       </div>
@@ -159,6 +170,7 @@ interface CommentProps {
   username: string;
   text: string;
 }
+
 function Comment({ name, username, text }: CommentProps) {
   return (
     <div className="border-b border-gray-300  ">

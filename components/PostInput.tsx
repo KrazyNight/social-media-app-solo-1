@@ -34,32 +34,43 @@ export default function PostInput({ insideModal }: PostInputProps) {
   );
   const dispatch: AppDispatch = useDispatch();
 
-  async function sendComment() {
-    const postRef = doc(db, "posts", commentDetails.id);
+// # 1 Send Comment 
+  // async function sendComment() {
+  //   const postRef = doc(db, "posts", commentDetails.id);
 
-    await updateDoc(postRef, {
-      comments: arrayUnion({
-        name: user.name,
-        username: user.username,
-        text: text,
-      }),
-    });
-    setText("");
-    dispatch(closeCommentModal());
-  }
+  //   await updateDoc(postRef, {
+  //     comments: arrayUnion({
+  //       name: user.name,
+  //       username: user.username,
+  //       text: text,
+  //     }),
+  //   });
+  //   setText("");
+  //   dispatch(closeCommentModal());
+  // }
+  //
 
-  async function sendPost() {
-    await addDoc(collection(db, "posts"), {
-      text: text,
-      name: user.name,
-      username: user.username,
-      timestamp: serverTimestamp(),
-      likes: [],
-      comments: [],
-    });
+async function sendComment()
 
-    setText("");
-  }
+
+
+
+
+//#6 send post
+
+//   async function sendPost() {
+//     await addDoc(collection(db, "posts"), {
+//       text: text,
+//       name: user.name,
+//       username: user.username,
+//       timestamp: serverTimestamp(),
+//       likes: [],
+//       comments: [],
+//     });
+
+//     setText("");
+//   }
+// //
 
   return (
     <>

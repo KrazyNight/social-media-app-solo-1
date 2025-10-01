@@ -13,19 +13,22 @@ import {
 import { db } from "@/firebase";
 
 export default function PostFeed() {
-  const [posts, setPosts] = useState<
-    QueryDocumentSnapshot<DocumentData, DocumentData>[]
-  >([]);
 
-  useEffect(() => {
-    const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const snapshotDocs = snapshot.docs;
-      setPosts(snapshotDocs);
-    });
-    return unsubscribe;
-  }, []);
+  // #2 display post/ snapshot / useEffect
+  // const [posts, setPosts] = useState<
+  //   QueryDocumentSnapshot<DocumentData, DocumentData>[]
+  // >([]);
 
+  // useEffect(() => {
+  //   const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
+  //   const unsubscribe = onSnapshot(q, (snapshot) => {
+  //     const snapshotDocs = snapshot.docs;
+  //     setPosts(snapshotDocs);
+  //   });
+  //   return unsubscribe;
+  // }, []);
+
+  
   return (
     <>
       <div
@@ -44,20 +47,15 @@ export default function PostFeed() {
         </div>
         <PostInput />
 
-        
-        
-        {
-          posts.map(post => <Post
-          key={post.id}
-          data={post.data()}
-          id={post.id}
-      
-          />)
-        }
 
-   
+{/* #3 post.map()
 
-        {/* <Post /> */}
+        {posts.map((post) => (
+          <Post key={post.id} data={post.data()} id={post.id} />
+        ))} 
+*/}
+
+        <Post />
       </div>
     </>
   );

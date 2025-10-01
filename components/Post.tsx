@@ -27,33 +27,44 @@ import {
 import Link from "next/link";
 import { db } from "@/firebase";
 
+
+
 interface PostProps {
   data: DocumentData;
   id: string;
 }
 
+
+
+
+
+
+
 export default function Post({ data, id }: PostProps) {
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
 
-  async function likePost() {
-    if (!user.username) {
-      dispatch(openLogInModal());
-      return;
-    }
-    const postRef = doc(db, "posts", id);
+  // #7 like Posts
 
-    if (data.likes.includes(user.uid)) {
-      await updateDoc(postRef, {
-        likes: arrayRemove(user.uid),
-      });
-    } else {
-      await updateDoc(postRef, {
-        likes: arrayUnion(user.uid),
-      });
-    }
-  }
+  // async function likePost() {
+  //   if (!user.username) {
+  //     dispatch(openLogInModal());
+  //     return;
+  //   }
+  //   const postRef = doc(db, "posts", id);
 
+  //   if (data.likes.includes(user.uid)) {
+  //     await updateDoc(postRef, {
+  //       likes: arrayRemove(user.uid),
+  //     });
+  //   } else {
+  //     await updateDoc(postRef, {
+  //       likes: arrayUnion(user.uid),
+  //     });
+  //   }
+  // }
+  //
+  
   return (
     <>
       <div className="border-b border-gray-400">
