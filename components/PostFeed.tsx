@@ -1,72 +1,30 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 import PostInput from "./PostInput";
 import Post from "./Post";
-import { collection, DocumentData, onSnapshot, orderBy, query, QueryDocumentSnapshot } from "firebase/firestore";
+import {
+  collection,
+  DocumentData,
+  onSnapshot,
+  orderBy,
+  query,
+  QueryDocumentSnapshot,
+} from "firebase/firestore";
 import { db } from "@/firebase";
 
 export default function PostFeed() {
-
-  // const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData, DocumentData>[]>([]);
-
-  // useEffect(() => {
-  //   const q = query(collection(db, "posts"), orderBy("timestamp", "desc"))
-
-  //   const unsubscribe = onSnapshot(q, (snapshot) => {
-  //     const snapshotDocs = snapshot.docs
-
-
-  //     setPosts(snapshotDocs)
-  //   }) 
-  // })
-
-
-
-  // const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData, DocumentData>[]>([])
-  
-  // useEffect(() => {
-  //   // do query 
-  //   //fetch data/getDocs.onSnapshot
-  //   const q = query(collection(db, "posts"), orderBy("timestamp", "desc"))
-
-  //   const unsubscribe = onSnapshot(q, (snapshot) => {
-  //     const snapshotDocs = snapshot.docs
-
-  //     setPosts(snapshotDocs)
-
-  //   })
-  // })
-
-
-
-  // const [posts, setPosts] = useState([])
-
-  // useEffect(() => {
-
-  //   const q = query(collection(db, "posts"), orderBy( "timestamp", "desc"))
-
-  //   const unsubscribe = onSnapshot(q, (snapshot) => {
-  //     const snapshotDocs = snapshot.docs
-  //     setPosts(snapshotDocs)
-
-  //   })
-  //   return unsubscribe
-  // }, [])
-  
-  const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData, DocumentData>[]>([]);
+  const [posts, setPosts] = useState<
+    QueryDocumentSnapshot<DocumentData, DocumentData>[]
+  >([]);
 
   useEffect(() => {
     const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const snapshotDocs = snapshot.docs
-      setPosts(snapshotDocs)
-
-    })
-    return unsubscribe
-  }, [])
-
-
-
+      const snapshotDocs = snapshot.docs;
+      setPosts(snapshotDocs);
+    });
+    return unsubscribe;
+  }, []);
 
   return (
     <>
@@ -85,6 +43,9 @@ export default function PostFeed() {
           Home
         </div>
         <PostInput />
+
+        
+        
         {
           posts.map(post => <Post
           key={post.id}
@@ -94,40 +55,9 @@ export default function PostFeed() {
           />)
         }
 
-        {/* {
-          posts.map((post) => <Post 
-          key={post.id}
-          data={post.data()}
+   
 
-          
-
-          />)
-        } */}
-
-{/* 
-        {posts.map((post) => <Post
-        key={post.id}
-        data={post.data()}
-        
-        /> )}
-
- */}
-        
-
-
-{/* 
-        {posts.map(post => <Post
-        key={post.id}
-        data={post.data()}
-        
-        />)} 
-*/}
-
-
-
-
-
-        {/* <Post />  */}
+        {/* <Post /> */}
       </div>
     </>
   );

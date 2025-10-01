@@ -16,30 +16,16 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-//
-// const fetchPost = async (id: string) => {
-//   const postRef = doc(db, "posts", id)
-//   const postSnap = await getDoc(postRef )
-//   return postSnap.data()
-// }
-
-// interface PageProps {
-//   params: {
-//     id: string
-//   }
-// }
-//
-
 const fetchPost = async (id: string) => {
-  const postRef = doc(db, "posts", id)
-  const postSnap = await getDoc(postRef)
-  return postSnap.data()
+  const postRef = doc(db, "posts", id);
+  const postSnap = await getDoc(postRef);
+  return postSnap.data();
 };
 
 interface PageProps {
   params: {
-    id: string
-  }
+    id: string;
+  };
 }
 
 interface Comment {
@@ -51,13 +37,7 @@ interface Comment {
 export default async function page({ params }: PageProps) {
   const { id } = params;
   const post = await fetchPost(id);
-  console.log(post)
-  
-  
-  //
-  // const { id } = params
-  // const post = await fetchPost(id)
-  //
+  console.log(post);
 
   return (
     <>
@@ -156,46 +136,14 @@ export default async function page({ params }: PageProps) {
             text-[#707E89] cursor-not-allowed 
               "
             />
-
           </div>
-          {
-            post?.comments.map((comment: Comment) => (
-              <Comment
-              name={comment.name}
-              username={comment.username}
-              text={comment.text}
-              />
-            ))
-          }
-
-          
-{/* 
-          {
-            post?.comments.map((comment: Comment) => (
-                <Comment
-                name={comment.name}
-                username={comment.username}
-                text={comment.text}
-                />
-
-            ))} */}
-
-
-          {/* {post?.comments.map((comment: Comment) => (
+          {post?.comments.map((comment: Comment) => (
             <Comment
               name={comment.name}
               username={comment.username}
               text={comment.text}
             />
-          ))} */}
-
-          
-{/*           
-          <Comment
-              name="name"
-              username="username"
-              text="text"
-          /> */}
+          ))}
 
           {/* <Comment /> */}
         </div>

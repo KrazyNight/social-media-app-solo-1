@@ -1,157 +1,82 @@
 "use client";
 
-import { closeLogInModal, closeSignUpModal, openSignUpModal } from "@/redux/slices/modalSlice";
+import {
+  closeSignUpModal,
+  openSignUpModal,
+} from "@/redux/slices/modalSlice";
 import { AppDispatch, RootState } from "@/redux/store";
 import { EyeIcon, EyeSlashIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Modal } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { auth } from "@/firebase";
 import { signInUser } from "@/redux/slices/userSlice";
-import { create } from "domain";
 
 export default function SignUpModal() {
   const [showPassword, setShowPassord] = useState(false);
-  const isOpen = useSelector((state: RootState) => state.modals.signUpModalOpen);
+  const isOpen = useSelector(
+    (state: RootState) => state.modals.signUpModalOpen
+  );
   const dispatch: AppDispatch = useDispatch();
 
   const [name, setName] = useState("");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // async function handleSignUp() {
-  //   const userCredentails = await createUserWithEmailAndPassword(
-  //     auth,
-  //     email,
-  //     password,
-  //   )
-  // }
 
-
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-  //     if (!currentUser) return
-
-  //     //redux
-  //     dispatch(signInUser({
-  //       name: "",
-  //       username: "",
-  //       email: "",
-  //       uid: "",
-  //     }))
-
-  //   })
-  //   return unsubscribe
-  // }, [])
-
-
-
-//Original 
-
-  // async function handleSignUp() {
-  //   const userCredentials = await createUserWithEmailAndPassword(
-  //     auth, 
-  //     email, 
-  //     password
-  //   );
-
-  //   await updateProfile(userCredentials.user, {
-  //     displayName: name,
-  //   });
-
-
-  //   dispatch(signInUser({
-  //     name: userCredentials.user.displayName ,// inside currentUser, "displayName: null "
-
-  //     username: userCredentials.user.email!.split("@")[0],
-  //     uid: userCredentials.user.uid,
-  //     email: userCredentials.user.email,
-  //   }))
-
-  // }
-
-
-
-  //   async function handleLogInGuest() {
-  //     const unsubscribed = await signInWithEmailAndPassword(
-  //       auth,
-  //       "guest123456789@gmail.com",
-  //       "123456789"
-  //     )
-  //   }
-
-
-  // useEffect(() => {
-  //   const unsubscribed = onAuthStateChanged(auth, (currentUser) => {
-  //     if (!currentUser) return
-
-  //     //redux
-  //     dispatch(signInUser({
-
-  //       name: currentUser.displayName ,// inside currentUser, "displayName: null "
-
-  //       username: currentUser.email!.split("@")[0],
-  //       uid: currentUser.uid,
-  //       email: currentUser.email,
-  //     }
-  //     ))
-  //   } 
-  //   )
-  //   return unsubscribed
-
-  // }, [])
-
-
+  
   async function handleSignUp() {
     const userCredentails = await createUserWithEmailAndPassword(
       auth,
       email,
-      password,
-    )
+      password
+    );
 
     await updateProfile(userCredentails.user, {
       displayName: name,
-    })
-
+    });
 
     //sign in in redux
-    dispatch(signInUser({
-      name: userCredentails.user.displayName,
-      username: userCredentails.user.email!.split('@')[0], 
-      uid: userCredentails.user.uid, 
-      email: userCredentails.user.email, 
-    }))
+    dispatch(
+      signInUser({
+        name: userCredentails.user.displayName, 
+        username: userCredentails.user.email!.split("@")[0],
+        uid: userCredentails.user.uid,
+        email: userCredentails.user.email,
+      })
+    );
   }
 
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, (currentUser) => {
-      if (!currentUser) return
+      if (!currentUser) return;
 
       //dispatch redux
-      dispatch(signInUser({
-        name: currentUser.displayName,
-        username: currentUser.email!.split("@")[0],
-        uid: currentUser.uid,
-        email: currentUser.email,
+      dispatch(
+        signInUser({
+          name: currentUser.displayName, // inside currentUser, "displayName: null "
+          username: currentUser.email!.split("@")[0],
+          uid: currentUser.uid,
+          email: currentUser.email,
+        })
+      );
+    });
+    return unsubscribed;
+  }, []);
 
-      }))
-      
-    }
-    )
-    return unsubscribed
-  }, [])
-
-
-     async function handleLogInGuest() {
-      const unsubscribed = await signInWithEmailAndPassword(
-        auth,
-        "guest123456789@gmail.com",
-        "123456789"
-      )
-    }
-
-
+  async function handleLogInGuest() {
+    const unsubscribed = await signInWithEmailAndPassword(
+      auth,
+      "guest123456789@gmail.com",
+      "123456789"
+    );
+  }
 
   return (
     <>
@@ -190,7 +115,6 @@ export default function SignUpModal() {
                     "
                 onChange={(event) => setName(event.target.value)}
                 value={name}
-
               />
               <input
                 type="email"
@@ -209,49 +133,43 @@ export default function SignUpModal() {
                     transition flex items-center overflow-hidden pr-3
                     "
               >
-                <input type={showPassword ? "text" : "password"} 
-                placeholder="Password"
-                className="w-full h-full pl-3 outline-none "
-
-                onChange={(event) => setPassword(event.target.value)}
-                value={password}
-
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password"
+                  className="w-full h-full pl-3 outline-none "
+                  onChange={(event) => setPassword(event.target.value)}
+                  value={password}
                 />
-                <div className="w-7 h-7 text-gray-400 cursor-pointer"
-                onClick={() => setShowPassord(!showPassword)}
+                <div
+                  className="w-7 h-7 text-gray-400 cursor-pointer"
+                  onClick={() => setShowPassord(!showPassword)}
                 >
-                    {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
+                  {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
                 </div>
               </div>
-
-              
             </div>
 
-            
-              <button
-                className="w-full h-[48px] text-sm font-bold mb-5 bg-[#f4af01]
+            <button
+              className="w-full h-[48px] text-sm font-bold mb-5 bg-[#f4af01]
                 rounded-full
                 "
-                onClick={() => {
-                  
-                  handleSignUp()
-                }}
+              onClick={() => {
+                handleSignUp();
+              }}
 
-                //"RUN" the handleSignUp(), will link to firebase auth
-              >
-                <span className="text-white ">Sign Up</span>
-              </button>
-              <span className="mb-5 text-sm text-center block "> Or </span>
-              <button
-                className="w-full h-[48px] text-sm font-bold bg-[#f4af01]
+              //"RUN" the handleSignUp(), will link to firebase auth
+            >
+              <span className="text-white ">Sign Up</span>
+            </button>
+            <span className="mb-5 text-sm text-center block "> Or </span>
+            <button
+              className="w-full h-[48px] text-sm font-bold bg-[#f4af01]
                 rounded-full
                 "
-                onClick={() => handleLogInGuest()}
-              >
-                <span className="text-white ">Log In as Guest</span>
-              </button>
-          
-
+              onClick={() => handleLogInGuest()}
+            >
+              <span className="text-white ">Log In as Guest</span>
+            </button>
           </div>
         </div>
       </Modal>
