@@ -17,7 +17,7 @@ import Link from "next/link";
 import React from "react";
 
 
-//#4 fetchPost from firestore
+//#5 fetchPost from firestore
 // const fetchPost = async (id: string) => {
 //   const postRef = doc(db, "posts", id);
 //   const postSnap = await getDoc(postRef);
@@ -145,7 +145,7 @@ export default function page() {
             />
           </div>
 
-{/* #5 post?.comments.map()
+{/* #6 post?.comments.map()
 
           {post?.comments.map((comment: Comment) => (
             <Comment

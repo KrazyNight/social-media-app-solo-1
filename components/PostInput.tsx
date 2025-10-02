@@ -34,7 +34,7 @@ export default function PostInput({ insideModal }: PostInputProps) {
   );
   const dispatch: AppDispatch = useDispatch();
 
-// # 1 Send Comment 
+// #  4 Send Comment 
   // async function sendComment() {
   //   const postRef = doc(db, "posts", commentDetails.id);
 
@@ -50,13 +50,14 @@ export default function PostInput({ insideModal }: PostInputProps) {
   // }
   //
 
-async function sendComment()
+  async function sendComment()
 
 
 
 
 
-//#6 send post
+
+//#1 send post
 
 //   async function sendPost() {
 //     await addDoc(collection(db, "posts"), {
@@ -71,6 +72,17 @@ async function sendComment()
 //     setText("");
 //   }
 // //
+
+async function sendPost()
+  await addDoc(collection(db, "posts"), {
+    text: text,
+    name: user.name,
+    username: user.username,
+    timestamp: serverTimestamp(),
+    likes: [],
+    comments:[]
+  })
+
 
   return (
     <>

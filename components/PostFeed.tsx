@@ -27,8 +27,8 @@ export default function PostFeed() {
   //   });
   //   return unsubscribe;
   // }, []);
+ 
 
-  
   return (
     <>
       <div
@@ -46,9 +46,9 @@ export default function PostFeed() {
           Home
         </div>
         <PostInput />
-
-
-{/* #3 post.map()
+        
+  
+{/* #3 posts.map()
 
         {posts.map((post) => (
           <Post key={post.id} data={post.data()} id={post.id} />
