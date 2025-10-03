@@ -10,6 +10,7 @@ import {
   MapPinIcon,
   PhotoIcon,
 } from "@heroicons/react/24/outline";
+import { updateProfile } from "firebase/auth";
 import {
   addDoc,
   arrayUnion,
@@ -50,7 +51,19 @@ export default function PostInput({ insideModal }: PostInputProps) {
   // }
   //
 
-  async function sendComment()
+  async function sendComment() {
+    const postRef = doc(db, "posts", commentDetails.id )
+    
+    await updateDoc(postRef, {
+      commnets: arrayUnion({
+        name: user.name,
+        username: user.username,
+        text: text
+      })
+    })
+    setText("");
+    dispatch(closeCommentModal());
+  }
 
 
 
@@ -73,16 +86,18 @@ export default function PostInput({ insideModal }: PostInputProps) {
 //   }
 // //
 
-async function sendPost()
-  await addDoc(collection(db, "posts"), {
-    text: text,
-    name: user.name,
-    username: user.username,
-    timestamp: serverTimestamp(),
-    likes: [],
-    comments:[]
-  })
+  async function sendPost() {
+    await addDoc(collection(db, "posts"), {
+      text: text,
+      name: user.name,
+      username: user.username,
+      timestamp: serverTimestamp(),
+      likes: [],
+      comments: [],
 
+    })
+    setText("")
+  }
 
   return (
     <>

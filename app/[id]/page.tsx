@@ -12,6 +12,7 @@ import {
   HeartIcon,
 } from "@heroicons/react/24/outline";
 import { doc, getDoc } from "firebase/firestore";
+import { get } from "http";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -44,7 +45,23 @@ import React from "react";
 //   const post = await fetchPost(id);
 //   console.log(post);
 
-export default function page() {
+
+const fetchPost = async (id: string) => {
+  const postRef = doc(db, "posts", id)
+  const postSnap = await getDoc(postRef)
+  return postSnap.data()
+
+}
+
+
+interface PageProps {
+  params: {
+    id: string
+  }
+}
+export default async function page({ params} : PageProps) {
+  const { id } = params
+  const post = await fetchPost(id)
 
   return (
     <>
@@ -145,6 +162,19 @@ export default function page() {
             />
           </div>
 
+          {post?.comments.map((comment:{
+
+            name: string;
+            username: string;
+            text: string;            
+          }
+            
+           ) => <Comment
+          name={comment.name}
+          username={comment.username}
+          text={comment.text}
+          />)}
+
 {/* #6 post?.comments.map()
 
           {post?.comments.map((comment: Comment) => (
@@ -156,7 +186,7 @@ export default function page() {
           ))} 
 */}
 
-          <Comment />
+          {/* <Comment /> */}
         </div>
         <Widgets />
       </div>

@@ -29,6 +29,16 @@ export default function PostFeed() {
   // }, []);
  
 
+  const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData, DocumentData>[]>([])
+   useEffect(() => {
+    const q = query(collection(db, "posts"), orderBy("timestamp", "desc"))
+    const unsubcribe = onSnapshot(q, (snapshot) => {
+      const snapshotDocs = snapshot.docs
+
+      setPosts(snapshotDocs)
+    })
+  }, [])
+
   return (
     <>
       <div
@@ -47,6 +57,14 @@ export default function PostFeed() {
         </div>
         <PostInput />
         
+        {
+          posts.map((post) => <Post
+          key={post.id}
+          data={post.data()}
+          id={post.id}
+          />)
+        }
+        
   
 {/* #3 posts.map()
 
@@ -55,7 +73,7 @@ export default function PostFeed() {
         ))} 
 */}
 
-        <Post />
+        {/* <Post /> */}
       </div>
     </>
   );
